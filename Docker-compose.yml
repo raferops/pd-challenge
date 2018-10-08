@@ -2,6 +2,7 @@ version: "3"
 services:
   db:
     image: "mysql:5.7"
+    container_name: "db"
     working_dir: "/var/lib/mysql"
     volumes:
       - ./database/init:/docker-entrypoint-initdb.d/
@@ -21,6 +22,7 @@ services:
   
   app:
     image: "node:8"
+    container_name: "app"
     working_dir: "/home/node/app"
     restart "always"
     volumes:
@@ -35,6 +37,7 @@ services:
   
   web:
     image: "nginx:latest"
+    container_name: "web"
     restart: "always"
     volumes:
       - ./web:/etc/nginx/
