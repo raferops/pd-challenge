@@ -2,7 +2,6 @@
 
 docker-compose up -d
 
-./waitfor.sh localhost:80
 wait
 
 echo
