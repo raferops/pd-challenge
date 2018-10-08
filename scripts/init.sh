@@ -2,9 +2,12 @@
 
 docker-compose up -d
 
-echo
-echo -ne "Starting up..." && sleep 3 && echo "3" && sleep 3 && echo "2" && sleep 3 && echo "1" && sleep 3
+./waitfor.sh localhost:80
+wait
 
+echo
+echo -ne "Starting up... " && sleep 5 && echo -ne "3... " && sleep 5 && echo -ne "2... " && sleep 5 && echo -ne "1.. " && sleep 5 && echo "DONE!"
+echo
 
 
 echo "Testing environment..."
@@ -20,7 +23,6 @@ if [ $test = "200" ]; then
 fi
 
 echo
-
 echo "Testing POST method:"
 test=`curl -sX POST http://localhost/notes --data {"Text":"test123"}`
 if [ $test = "Ok" ]; then
@@ -29,3 +31,7 @@ if [ $test = "Ok" ]; then
       echo "Something wrong here"
       exit 1
 fi
+echo
+echo "All tests passed!"
+echo
+echo "Start up proccess complete successfully!"

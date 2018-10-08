@@ -1,9 +1,26 @@
 #!/bin/bash
 
-test=`curl -Is -w %{http_code} -X GET http://ip172-18-0-24-betqvfqv9dig00dia2vg-80.direct.labs.play-with-docker.com/notes |tail -n1`
+echo "Testing environment..."
+echo
+echo "Testing Webserver status:"
+test=`curl -Is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
 echo $test
-if [ $test="200%" ]; then
-    echo "Webserver OK!"
-else
-    echo "Something wrong"
+if [ $test = "200" ]; then
+   echo "Webserver OK!"
+   else
+      echo "Something wrong here"
+      exit 1
 fi
+
+echo
+
+echo "Testing POST method:"
+test=`curl -sX POST http://localhost/notes --data {"Text":"test123"}`
+if [ $test = "Ok" ]; then
+   echo "POST method OK!"
+   else
+      echo "Something wrong here"
+      exit 1
+fi
+echo
+echo "All tests passed!"
