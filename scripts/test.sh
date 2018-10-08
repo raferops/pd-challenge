@@ -23,4 +23,14 @@ if [ $test = "Ok" ]; then
       exit 1
 fi
 echo
+echo "Testing DELETE method:"
+test=`curl -i -X "DELETE" "http://localhost:80/notes/1"`
+if [ $test = "Ok" ]; then
+   echo "POST method OK!"
+   else
+      echo "Something wrong here"
+      exit 1
+fi
+echo
+
 echo "All tests passed!"

@@ -8,4 +8,5 @@ rm -rf ../app/node_modules
 
 mkdir ../database/db
 
+
 echo "Done!"
