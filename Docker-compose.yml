@@ -1,0 +1,45 @@
+version: "3"
+services:
+  db:
+    image: "mysql:5.7"
+    working_dir: "/var/lib/mysql"
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d/
+      - ./database/db:/var/lib/mysql
+    restart: "always"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - MYSQL_USER=notes-api
+      - MYSQL_PASSWORD=notes-api
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_ROOT_HOST=localhost
+  
+  app:
+    image: "node:8"
+    working_dir: "/home/node/app"
+    volumes:
+      - ./app:/home/node/app
+    environment:
+      - NODE_ENV=production
+    expose: 
+      - "8080"
+    command: /bin/bash -c "npm install restify && npm install restify-errors && npm install mysql && npm install mysql-client && npm start"
+    depends_on:
+     - db
+  
+  web:
+    image: "nginx:latest"
+    restart: always
+    volumes:
+      - ./web:/etc/nginx/
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+    depends_on: 
+      - app
