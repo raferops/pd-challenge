@@ -22,6 +22,7 @@ services:
   app:
     image: "node:8"
     working_dir: "/home/node/app"
+    restart "always"
     volumes:
       - ./app:/home/node/app
     environment:
@@ -34,7 +35,7 @@ services:
   
   web:
     image: "nginx:latest"
-    restart: always
+    restart: "always"
     volumes:
       - ./web:/etc/nginx/
     ports:
