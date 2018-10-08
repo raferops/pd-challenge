@@ -24,7 +24,7 @@ services:
     image: "node:8"
     container_name: "app"
     working_dir: "/home/node/app"
-    restart "always"
+    restart: "always"
     volumes:
       - ./app:/home/node/app
     environment:
