@@ -1,0 +1,11 @@
+language: generic
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - curl
+
+after_success: |
+  ./scripts/test.sh
