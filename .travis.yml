@@ -8,4 +8,5 @@ addons:
       - curl
 
 after_success: |
+  ./scripts/start.sh
   ./scripts/test.sh
