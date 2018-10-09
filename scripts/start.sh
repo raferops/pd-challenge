@@ -1,18 +1,18 @@
 #!/bin/bash
 
+# Initializing containers Environment
 docker-compose up -d
 
-wait
-
 echo
-echo -ne "Starting up... " && sleep 5 && echo -ne "3... " && sleep 5 && echo -ne "2... " && sleep 5 && echo -ne "1.. " && sleep 5 && echo "DONE!"
+echo -ne "Starting up... " && sleep 5 && echo -ne "3... " && sleep 5 && echo -ne "2... " && sleep 5 && echo -ne "1... " && sleep 5 && echo "DONE!"
 echo
 
-
+sleep 1
 echo "Testing environment..."
 echo
+#Testing GET method
 echo "Testing Webserver status:"
-test=`curl -Is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
+test=`curl -is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
 echo $test
 if [ $test = "200" ]; then
    echo "Webserver OK!"
@@ -20,21 +20,28 @@ if [ $test = "200" ]; then
       echo "Something wrong here"
       exit 1
 fi
-
 echo
+
+sleep 1
+#Testing POST method
 echo "Testing POST method:"
-test=`curl -sX POST http://localhost/notes --data {"Text":"test123"}`
-if [ $test = "Ok" ]; then
+test=`curl -is -w %{http_code} -X POST http://localhost/notes --data {"Text":"JustTestIt"} -o /dev/null`
+if [ $test = "200" ]; then
    echo "POST method OK!"
    else
       echo "Something wrong here"
       exit 1
 fi
-
 echo
+
+sleep 1
+#Getting ID of the last POST
+DELID=`curl -sX GET http://localhost/notes |  grep -o -E '[0-9]+' | head -n1`
+
+#Testing DELETE method
 echo "Testing DELETE method:"
-test=`curl -i -X "DELETE" "http://localhost:80/notes/1"`
-if [ $test = "Ok" ]; then
+test=`curl -is -w %{http_code} -X DELETE "http://localhost:80/notes/$DELID" -o /dev/null`
+if [ $test = "200" ]; then
    echo "POST method OK!"
    else
       echo "Something wrong here"
