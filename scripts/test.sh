@@ -4,14 +4,13 @@ echo "Testing environment..."
 echo
 
 #Testing GET method
-echo "Testing Webserver status:"
+echo "Testing GET method:"
 test=`curl -is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
 echo $test
 if [ $test = "200" ]; then
-   echo "Webserver OK!"
+   echo "GET method OK!"
    else
-      echo "Something wrong here"
-      exit 1
+      echo "OPS! Something wrong here!"
 fi
 
 echo
@@ -23,8 +22,7 @@ test=`curl -is -w %{http_code} -X POST http://localhost/notes --data {"Text":"Ju
 if [ $test = "200" ]; then
    echo "POST method OK!"
    else
-      echo "Something wrong here"
-      exit 1
+      echo "OPS! Something wrong here!"
 fi
 echo
 
@@ -35,11 +33,10 @@ DELID=`curl -sX GET http://localhost/notes |  grep -o -E '[0-9]+' | head -n1`
 echo "Testing DELETE method:"
 test=`curl -is -w %{http_code} -X DELETE "http://localhost:80/notes/$DELID" -o /dev/null`
 if [ $test = "200" ]; then
-   echo "POST method OK!"
+   echo "DELETE method OK!"
    else
-      echo "Something wrong here"
-      exit 1
+      echo "OPS! Something wrong here!"
 fi
 echo
 
-echo "All tests passed!"
+echo "All tests done!"
