@@ -1,37 +1,41 @@
-## Welcome to GitHub Pages
+#Passei Direto - DevOps Challenge
+---
 
-You can use the [editor on GitHub](https://github.com/raferops/pd-challenge/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Provisionar ambiente para comportar uma API em node.js + MySQL usando docker.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## Pre-requisitos para execução
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Docker / Docker-compose
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+## Utilização
 
-- Bulleted
-- List
+- Clonar o repositório `https://github.com/raferops/pd-challenge` via git, http ou ssh
+- Acessar o diretório onde estão os scripts de controle do projeto `cd pd-challenge/scripts/`
+- Executar um dos scripts de comando conforme desejado
 
-1. Numbered
-2. List
+## Scripts
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+###  ./start.sh
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Inicializa o ambiente utilizando o docker-compose para criar os containers e volumes necessários. 
+Aguarda a API responder o HTTP REQUEST `GET` com `status code 200` e então testa o ambiente com os metodos `POST` e `DELETE`.
 
-### Jekyll Themes
+### ./stop
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/raferops/pd-challenge/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Para o ambiente sem a perda de informações do banco de dados.
 
-### Support or Contact
+### ./test
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Testa os metodos `GET`,`POST` e `DELETE` da API e retorna o status.
+
+### ./resetenv
+
+Destroi todo o ambiente, removendo containers, volumes e WORKDIR da API.
+
+
+## BONUS CI
+
+É possível utilizar o arquivo `.travis.yml`, localizado no diretório raiz do projeto, para automatizar os testes do ambiente integrando o projeto do Github ao Travis-CI.
