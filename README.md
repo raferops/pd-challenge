@@ -1,4 +1,4 @@
-#Passei Direto - DevOps Challenge
+Passei Direto - DevOps Challenge
 ---
 
 Provisionar ambiente para comportar uma API em node.js + MySQL usando docker.
