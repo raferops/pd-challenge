@@ -4,7 +4,18 @@
 docker-compose up -d
 
 echo
-echo -ne "Starting up... " && sleep 5 && echo -ne "3... " && sleep 5 && echo -ne "2... " && sleep 5 && echo -ne "1... " && sleep 5 && echo "DONE!"
+echo -ne "Starting up... " # && sleep 5 && echo -ne "3... " && sleep 5 && echo -ne "2... " && sleep 5 && echo -ne "1... " && sleep 5 && echo "DONE!"
+CHECK=`curl -is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
+
+while [ $CHECK != 200 ] 
+do
+ echo -ne "."
+ CHECK=`curl -is -w %{http_code} -X GET http://localhost/notes -o /dev/null`
+ sleep 1
+done
+
+echo "Started!"
+
 echo
 
 sleep 1
